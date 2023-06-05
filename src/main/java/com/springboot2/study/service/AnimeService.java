@@ -10,42 +10,42 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot2.study.domain.Anime;
+import com.springboot2.study.repository.AnimeRepository;
+import com.springboot2.study.requests.AnimePostRequestBody;
+import com.springboot2.study.requests.AnimePutRequestBody;
 
 @Service
 public class AnimeService {
 	
-	private static List<Anime> animes; 
-		
-	static 
-	{
-		animes = new ArrayList<>(List.of(new Anime(1L, "Boku no hero"), new Anime(2L, "Berserk")));
+	private final AnimeRepository animeRepository;
+	
+	public AnimeService(final AnimeRepository animeRepository) {
+		this.animeRepository = animeRepository;
 	}
-	
-	
+
 	public List<Anime> listAll(){
-		return animes;
+		return animeRepository.findAll();
 	}
 	
-	public Anime findById(long id){
-		return animes.stream()
-				.filter(anime -> anime.getId().equals(id))
-				.findFirst()
+	public Anime findByIdOrThrowBadRequestException(long id){
+		return animeRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
 	}
 
-	public Anime save(Anime anime) {
-		anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
-		animes.add(anime);
-		return anime;
+	public Anime save(AnimePostRequestBody animePostRequestBody) {
+		Anime anime = new Anime();
+		anime.setName(animePostRequestBody.getName());
+		return animeRepository.save(anime);
 	}
 
 	public void delete(long id) {
-		animes.remove(findById(id));
+		animeRepository.delete(findByIdOrThrowBadRequestException(id));
 	}
 
-	public void replace(Anime anime) {
-		delete(anime.getId());
-		animes.add(anime);
+	public void replace(AnimePutRequestBody animePutRequestBody) {
+		Anime anime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
+		anime.setName(animePutRequestBody.getName());
+		animeRepository.save(anime);
 	}
 
 }
