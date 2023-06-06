@@ -20,6 +20,8 @@ import com.springboot2.study.requests.AnimePutRequestBody;
 import com.springboot2.study.service.AnimeService;
 import com.springboot2.study.util.DateUtil;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("animes")
 public class AnimeController {
@@ -50,7 +52,7 @@ public class AnimeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+	public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
 		return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 	}
 	

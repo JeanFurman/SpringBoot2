@@ -1,6 +1,10 @@
 package com.springboot2.study.requests;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class AnimePostRequestBody {
+	
+	@NotEmpty(message = "The anime name can't be empty")
 	private String name;
 
 	public AnimePostRequestBody() {

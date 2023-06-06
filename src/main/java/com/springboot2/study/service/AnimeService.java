@@ -16,6 +16,8 @@ import com.springboot2.study.repository.AnimeRepository;
 import com.springboot2.study.requests.AnimePostRequestBody;
 import com.springboot2.study.requests.AnimePutRequestBody;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class AnimeService {
 	
@@ -38,6 +40,7 @@ public class AnimeService {
 				.orElseThrow(() -> new BadRequestException("Anime not found"));
 	}
 
+	@Transactional
 	public Anime save(AnimePostRequestBody animePostRequestBody) {
 		return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
 	}
