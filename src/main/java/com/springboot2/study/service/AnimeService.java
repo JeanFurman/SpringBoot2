@@ -1,13 +1,10 @@
 package com.springboot2.study.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot2.study.domain.Anime;
 import com.springboot2.study.exception.BadRequestException;
@@ -27,8 +24,8 @@ public class AnimeService {
 		this.animeRepository = animeRepository;
 	}
 
-	public List<Anime> listAll(){
-		return animeRepository.findAll();
+	public Page<Anime> listAll(Pageable pageable){
+		return animeRepository.findAll(pageable);
 	}
 	
 	public List<Anime> findByName(String name){
