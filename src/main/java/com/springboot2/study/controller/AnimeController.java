@@ -20,7 +20,6 @@ import com.springboot2.study.domain.Anime;
 import com.springboot2.study.requests.AnimePostRequestBody;
 import com.springboot2.study.requests.AnimePutRequestBody;
 import com.springboot2.study.service.AnimeService;
-import com.springboot2.study.util.DateUtil;
 
 import jakarta.validation.Valid;
 
@@ -28,12 +27,10 @@ import jakarta.validation.Valid;
 @RequestMapping("animes")
 public class AnimeController {
 	
-	private DateUtil dateUtil;
 	private AnimeService animeService;
 
-	public AnimeController(DateUtil dateUtil, AnimeService animeService) {
+	public AnimeController(AnimeService animeService) {
 		super();
-		this.dateUtil = dateUtil;
 		this.animeService = animeService;
 	}
 	
