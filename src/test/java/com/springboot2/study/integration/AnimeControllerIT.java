@@ -50,8 +50,7 @@ public class AnimeControllerIT {
 		
 		String expectedName = animeSaved.getName();
 		
-		Pa
-		geableResponse<Anime> animePage = testRestTemplate.exchange("/animes",
+		PageableResponse<Anime> animePage = testRestTemplate.exchange("/animes",
 				HttpMethod.GET, null, new ParameterizedTypeReference<PageableResponse<Anime>>() {
 				}).getBody();
 		
